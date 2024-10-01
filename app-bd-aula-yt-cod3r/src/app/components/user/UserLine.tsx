@@ -28,7 +28,6 @@ export default function UserLine(props: UserLineProps) {
 
   const setImageUrl = async () => {
     const images = await getImage("Car");
-    console.log(images);
     setImages(images.results);
   };
 

@@ -353,7 +353,7 @@ export default users;
 Lista de usuários do Tipo User
 
 
-### Liberando domínio de acesso a imagems
+### Liberando domínio de acesso a imagems (Exemplo Unsplash)
 
 ```js
 //next.config.msj
