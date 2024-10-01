@@ -198,7 +198,7 @@ model User {
 npx prisma migrate dev --name init
 ```
 
->  Migrações são scripts ou arquivos que definem mudanças incrementais no esquema do banco de dados, como adicionar ou remover tabelas, colunas, índices, ou alterar tipos de dados. Elas ajudam a manter o banco de dados atualizado com as mudanças feitas no modelo de dados da aplicação.
+> Migrações são scripts ou arquivos que definem mudanças incrementais no esquema do banco de dados, como adicionar ou remover tabelas, colunas, índices, ou alterar tipos de dados. Elas ajudam a manter o banco de dados atualizado com as mudanças feitas no modelo de dados da aplicação.
 
 <ul>
   <li><strong>Criação de Migrações:</strong> Você define uma nova migração quando faz alterações no modelo de dados. Por exemplo, se você adicionar uma nova tabela ou coluna, você cria uma migração que descreve essas mudanças.</li>
@@ -226,4 +226,150 @@ model User {
 
 ```
 npx prisma migrate dev --name tabela-usuario-create-col-ativo
+```
+
+### Component Next.js (TypeScript)
+
+```js
+import Link from "next/link";
+import { ElementType } from "react";
+
+// Interface que define um type para as props do componente
+export interface MenuItemProps {
+  icon: ElementType;
+  text: string;
+  url: string;
+}
+
+export default function MenuItem(props: MenuItemProps) {
+  return (
+    <Link
+      href={props.url}
+      className="flex items-center gap-2 px-4 py-2 hover:bg-black"
+    >
+      <props.icon className="text-zinc-200" />
+      <span className="text-zinc-200">{props.text}</span>
+    </Link>
+  );
+}
+```
+
+### Criando a listagem de usuários por meio de diferentes componentes
+
+```ts
+export interface User {
+  id: string;
+  email: string;
+  name: string;
+  password: string;
+}
+```
+
+Interface para tipar Users
+
+```ts
+import { User } from "@/core/model/User";
+
+export interface UserLineProps {
+  user: User;
+}
+
+export default function UserLine(props: UserLineProps) {
+  return (
+    <div className="flex p-4 bg-zinc-900 rounded-md">
+      <div className="flex flex-col">
+        <span>{props.user.name}</span>
+        <span className="text-sm text-zinc-400">{props.user.email}</span>
+      </div>
+    </div>
+  );
+}
+```
+
+Linha que recebe um tipo User como prop
+
+```ts
+import users from "../../data/constants/users";
+import UserLine from "./UserLine";
+
+export default function UserList() {
+  return (
+    <div className="flex flex-col gap-4 ">
+      {users.map((user) => {
+        return <UserLine key={user.id} user={user} />;
+      })}
+    </div>
+  );
+}
+```
+
+E finalmente a lista que para casa user(usuários do tipo User) cria um componente de userLine
+
+```ts
+import { User } from "@/core/model/User";
+
+const users: User[] = [
+  {
+    id: "1",
+    email: "ana@empresa.com.br",
+    name: "Ana",
+    password: "123456",
+  },
+  {
+    id: "2",
+    email: "pedro@empresa.com.br",
+    name: "Pedro",
+    password: "123456",
+  },
+  {
+    id: "3",
+    email: "joao@empresa.com.br",
+    name: "Joao",
+    password: "123456",
+  },
+  {
+    id: "4",
+    email: "gui@empresa.com.br",
+    name: "Gui",
+    password: "123456",
+  },
+  {
+    id: "5",
+    email: "amanda@empresa.com.br",
+    name: "Amanda",
+    password: "123456",
+  },
+  {
+    id: "6",
+    email: "barbara@empresa.com.br",
+    name: "Barbara",
+    password: "123456",
+  },
+];
+
+export default users;
+```
+
+Lista de usuários do Tipo User
+
+
+### Liberando domínio de acesso a imagems
+
+```js
+//next.config.msj
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+        port: '',
+        pathname: '/**',
+      },
+    ],
+  },
+};
+
+export default nextConfig;
 ```
