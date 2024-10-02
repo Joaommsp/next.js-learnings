@@ -350,7 +350,7 @@ const users: User[] = [
 export default users;
 ```
 
-Lista de usuários do Tipo User
+Lista de usuários do Tipo USER
 
 
 ### Liberando domínio de acesso a imagems (Exemplo Unsplash)
