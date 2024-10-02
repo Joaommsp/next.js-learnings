@@ -17,6 +17,7 @@ interface UnsplashImage {
 
 export interface UserLineProps {
   user: User;
+  onClick: (user: User) => void;
 }
 
 export default function UserLine(props: UserLineProps) {
@@ -40,7 +41,10 @@ export default function UserLine(props: UserLineProps) {
   const randomImage = setRandomPfpIMage();
 
   return (
-    <div className="flex p-4 bg-zinc-900 rounded-md">
+    <div
+      className="flex p-4 bg-zinc-900 rounded-md  cursor-pointer"
+      onClick={() => props.onClick?.(props.user)}
+    >
       <div className="flex flex-col">
         {randomImage && (
           <Image
