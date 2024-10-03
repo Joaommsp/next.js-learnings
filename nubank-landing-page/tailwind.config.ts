@@ -8,16 +8,18 @@ const config: Config = {
   ],
   theme: {
     backgroundImage: {
-      "img_bg_hero": "url('./src/assets/images/bg-hero.png')",
+      img_bg_hero: "url('./src/assets/images/bg-hero.png')",
     },
     extend: {
-      "primary-purple": "#820BD0",
-      "primary-black": "#161616",
-      "primary-gray": "#33303E",
-      "second-gray": "#4E4B59",
-      "gray-phone": "#F4F4F4",
-      "text-gray": "#7A7786",
-      "opacity-gray": "rgba(100, 80, 57, 0.1)",
+      colors: {
+        "primary-purple": "#820BD0",
+        "primary-black": "#161616",
+        "primary-gray": "#33303E",
+        "second-gray": "#4E4B59",
+        "gray-phone": "#F4F4F4",
+        "text-gray": "#7A7786",
+        "opacity-gray": "rgba(100, 80, 57, 0.1)",
+      },
     },
   },
   plugins: [],

@@ -4,7 +4,7 @@ import DropDownIcon from "@/assets/images/arrow-down.svg";
 
 export function Header() {
   return (
-    <div className="w-full h-20">
+    <div className="w-full h-20 bg-primary-purple">
       <div>
         <div>
           <Image src={LogoNubank} alt="..." />
