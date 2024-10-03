@@ -352,7 +352,6 @@ export default users;
 
 Lista de usuários do Tipo USER
 
-
 ### Liberando domínio de acesso a imagems (Exemplo Unsplash)
 
 ```js
@@ -362,14 +361,81 @@ const nextConfig = {
   images: {
     remotePatterns: [
       {
-        protocol: 'https',
-        hostname: 'images.unsplash.com',
-        port: '',
-        pathname: '/**',
+        protocol: "https",
+        hostname: "images.unsplash.com",
+        port: "",
+        pathname: "/**",
       },
     ],
   },
 };
 
 export default nextConfig;
+```
+
+### Primeira pequena aplicação FULLSTACK com NEXT.JS
+
+> app-db-aula-yt-cod3r
+
+<img src="./public/images/MacBook Pro-1727908196116.jpeg" alt="...">
+
+<img src="./public/images/MacBook Pro-1727908200163.jpeg" alt="...">
+
+## Desenvolvendo uma LandingPage com NEXT e Taildwind CSS
+
+### Instalando Fontes e definindo cores personalizadas no NEXT com Tailwind CSS
+
+O Next.js 13 introduziu a integração com Google Fonts usando a API next/font, que facilita o carregamento otimizado das fontes.
+
+```js
+import "./globals.css"; // ou o arquivo CSS que você estiver usando
+import { Poppins } from "next/font/google";
+
+const poppins = Poppins({
+  subsets: ["latin"],
+  weight: ["400", "700"], // selecione os pesos que deseja
+});
+
+export const metadata = {
+  title: "Título do seu projeto",
+  description: "Descrição do seu projeto",
+};
+
+export default function RootLayout({ children }) {
+  return (
+    <html lang="en">
+      <body className={poppins.className}>{children}</body>
+    </html>
+  );
+}
+```
+
+Criar estilos parsonalizados no Tailwind CSS é muito simples:
+
+```js
+import type { Config } from "tailwindcss";
+
+const config: Config = {
+  content: [
+    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+  ],
+  theme: {
+    backgroundImage: {
+      img_bg_hero: "url('./src/assets/images/bg-hero.png')",
+    },
+    extend: {
+      "primary-purple": "#820BD0",
+      "primary-black": "#161616",
+      "primary-gray": "#33303E",
+      "second-gray": "#4E4B59",
+      "gray-phone": "#F4F4F4",
+      "text-gray": "#7A7786",
+      "opacity-gray": "rgba(100, 80, 57, 0.1)",
+    },
+  },
+  plugins: [],
+};
+export default config;
 ```
