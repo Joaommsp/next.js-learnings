@@ -7,12 +7,12 @@ const config: Config = {
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
-    backgroundImage: {
-      img_bg_hero: "url('./src/assets/images/bg-hero.png')",
-    },
     extend: {
+      backgroundImage: {
+        "hero-pattern": "url('../assets/images/bg-hero-02.png')",
+      },
       colors: {
-        "primary-purple": "#820BD0",
+        "primary-purple": "#2D0A47",
         "primary-black": "#161616",
         "primary-gray": "#33303E",
         "second-gray": "#4E4B59",

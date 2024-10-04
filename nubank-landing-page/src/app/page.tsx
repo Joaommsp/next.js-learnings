@@ -1,7 +1,11 @@
+import { SectionHero } from "@/components/SectionHero";
+import { ServiceSection } from "@/components/ServiceSection";
+
 export default function Home() {
   return (
-    <div>
-      <h1>OLÀ MUNDO</h1>
-    </div>
+    <>
+      <SectionHero />
+      <ServiceSection />
+    </>
   );
 }
