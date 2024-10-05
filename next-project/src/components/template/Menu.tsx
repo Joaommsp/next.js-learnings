@@ -15,7 +15,7 @@ export default function Menu() {
               <MenuItem text="Início" href="/" icon={IconHome2} />
               <MenuItem text="Layout" href="/layout" icon={IconLayout2} />
               <MenuItem text="Não Existe" href="/nao-existe" icon={IconError404} />
-              <MenuItem text="Produtos" href="/produtos" icon={IconListDetails} />
+              <MenuItem text="Produtos" href="/products" icon={IconListDetails} />
               <MenuItem
                   text="Cliente vs Servidor"
                   href="/cliente-servidor"

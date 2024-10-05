@@ -544,7 +544,6 @@ export default function PageWithLayout() {
 
 <img src="./public/images/tailwindclass.jpeg" alt="...">
 
-
 ### O conceito de Layout
 
 O conceito de Layout no Next.js se refere a uma estrutura reutilizável que permite que componentes e elementos comuns sejam compartilhados entre diferentes páginas ou partes do seu aplicativo. Ele ajuda a manter uma consistência visual e estrutural em todo o projeto, permitindo que partes do design (como cabeçalhos, rodapés, barras de navegação) sejam aplicadas de forma eficiente em várias páginas sem duplicação de código.
@@ -573,3 +572,203 @@ export default function RootLayout({ children }) {
 Esse LAYOUT JÁ VEM POR PADRÃO NA APLICAÇÃO NEXT
 
 <img src="./public/images/root-layout-next.png" alt="...">
+
+### Criando um Layout Interno
+
+```ts
+import { ReactNode } from "react";
+
+export interface LayoutProps {
+  children: ReactNode;
+}
+
+export default function Layout(props: LayoutProps) {
+  return (
+    <div className="h-screen border-8 border-red-500 p8">{props.children}</div>
+  );
+}
+```
+
+<img src="./public/images/root-layout-next2.png" alt="...">
+
+### useState
+
+Assim que usamos um useState em um arquivo, ele deverar ser to tipo "use client", pois o useState só está disponível no lado do Browser
+
+```ts
+"use client";
+
+import { ReactNode, useState } from "react";
+
+import Page from "@/components/template/Page";
+
+export interface LayoutProps {
+  children: ReactNode;
+}
+
+export default function Layout(props: LayoutProps) {
+  const [data] = useState(new Date().toLocaleTimeString());
+
+  return (
+    <Page>
+      <div className="h-screen border-8 border-red-500 p8">
+        {props.children}
+      </div>
+    </Page>
+  );
+}
+```
+
+### O Conceito de Template
+
+Introduzido com o App Router (a partir da versão 13), se refere a uma estrutura que define uma base comum para páginas dinâmicas ou rotas. Ele permite que o layout e a navegação permaneçam consistentes enquanto o conteúdo da página interna é atualizado dinamicamente. O arquivo template é semelhante ao layout, mas é recriado sempre que a rota muda, permitindo que você reutilize a estrutura visual para várias páginas ou rotas dinâmicas
+
+### Ordem de carregamento
+
+O arquivo `layout.tsx` é carregado antes do arquivo de template, e ambos envolvem o arquivo `page`
+
+```ts
+"use client";
+
+import { ReactNode, useState } from "react";
+
+import Page from "@/components/template/Page";
+
+export interface LayoutProps {
+  children: ReactNode;
+}
+
+export default function Layout(props: LayoutProps) {
+  const [data] = useState(new Date());
+
+  return (
+    <Page>
+      <div className="border-8 border-red-500 p-8">
+        <span>{data.toLocaleTimeString()}</span>
+        <main>{props.children}</main>
+      </div>
+    </Page>
+  );
+}
+```
+
+```ts
+"use client";
+
+import { ReactNode, useState } from "react";
+
+export interface LayoutProps {
+  children: ReactNode;
+}
+
+export default function Layout(props: LayoutProps) {
+  const [data] = useState(new Date());
+
+  return (
+    <div className="border-8 border-green-500 p-8">
+      <span>{data.toLocaleTimeString()}</span>
+      <main>{props.children}</main>
+    </div>
+  );
+}
+```
+
+<img src="./public/images/use-layout-use-template.jpeg" alt="...">
+
+### Estrutura
+
+<img src="./public/images/estrutura-layout-template-page.png" alt="...">
+
+> lembrando que a pasta "template" é apenas um nome para a rota
+
+### Criando Router Group
+
+<img src="./public/images/router-group.png" alt="...">
+
+permitir que você organize suas rotas de forma mais eficiente e flexível, sem impactar a estrutura da URL. Com os Router Groups, você pode agrupar componentes e pastas relacionadas, sem que o nome dessas pastas afete a URL final.Router Group envolve o nome da pasta entre parênteses, como (grupo), o que faz com que o Next.js entenda que esse diretório é apenas para organização e não afeta a rota final.
+
+```
+/app
+  /(admin)            # Grupo que não aparece na URL
+    dashboard/page.tsx  # URL: /dashboard
+    users/page.tsx      # URL: /users
+  /(marketing)        # Outro grupo que não aparece na URL
+    blog/page.tsx       # URL: /blog
+    pricing/page.tsx    # URL: /pricing
+  about/page.tsx      # URL: /about
+  contact/page.tsx    # URL: /contact
+```
+
+### Criando um loading com o arquivo loading.tsx e Skeleton
+
+O Skeleton Loading é uma prática comum que envolve exibir um layout esquelético enquanto o conteúdo real é carregado, oferecendo uma melhor percepção de desempenho ao usuário.
+
+Primeiro, crie um componente que será exibido enquanto o conteúdo está carregando. Esse componente será uma estrutura esquelética que se parece com o layout final, mas sem dados reais.
+
+```js
+// components/Skeleton.js
+export default function Skeleton() {
+  return (
+    <div className="animate-pulse space-y-4">
+      {/* Skeleton Header */}
+      <div className="h-8 bg-gray-300 rounded"></div>
+
+      {/* Skeleton Body (parágrafos) */}
+      <div className="h-6 bg-gray-300 rounded w-3/4"></div>
+      <div className="h-6 bg-gray-300 rounded w-full"></div>
+      <div className="h-6 bg-gray-300 rounded w-5/6"></div>
+    </div>
+  );
+}
+```
+
+#### Crie um arquivo loading.tsx no App Router:
+
+No App Router do Next.js (pasta app/), você pode criar um arquivo loading.tsx em qualquer diretório para mostrar uma tela de carregamento quando os dados ou a página estão sendo carregados.
+
+```js
+// app/dashboard/loading.tsx
+import Skeleton from "@/components/Skeleton";
+
+export default function Loading() {
+  return (
+    <div className="p-4">
+      <Skeleton />
+    </div>
+  );
+}
+```
+
+```ts
+import "react-loading-skeleton/dist/skeleton.css";
+import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
+
+export default async function Loading(props: { quantidade: number }) {
+  function skeleton() {
+    return (
+      <div className="flex flex-col gap-5">
+        <div className="flex items-center gap-3">
+          <Skeleton count={1} height={90} width={90} />
+          <div className="flex-1 flex flex-col gap-1.5">
+            <Skeleton count={1} height={20} containerClassName="flex-1" />
+            <Skeleton count={1} height={20} containerClassName="flex-1 w-1/3" />
+            <Skeleton count={1} height={20} containerClassName="flex-1 w-1/5" />
+          </div>
+        </div>
+      </div>
+    );
+  }
+  return (
+    <div className="flex flex-col gap-6">
+      <SkeletonTheme baseColor="#202020" highlightColor="#444">
+        <span>Carregando...</span>
+        {Array.from({ length: props.quantidade }).map((_, index) => (
+          <div key={index}>{skeleton()}</div>
+        ))}
+      </SkeletonTheme>
+    </div>
+  );
+}
+```
+
+<img src="./public/images/skeleton-loading.jpeg" alt="...">
