@@ -441,3 +441,135 @@ const config: Config = {
 };
 export default config;
 ```
+
+## Essencial de NEXT.JS Cod3r
+
+<img src="./public/images/react-themes.png" alt="...">
+
+### Alterando porta do localhost (padrão porta 3000)
+
+Usando npm:
+
+```
+npm run dev -- -p 4000
+```
+
+No arquivo package.json, encontre a seção de scripts e ajuste o comando do dev:
+
+```json
+{
+  "scripts": {
+    "dev": "next dev -p 4000"
+  }
+}
+```
+
+### Bibliotecas de Ícones SVG para o React
+
+<a href="https://github.com/tabler/tabler-icons">https://github.com/tabler/tabler-icons</a>
+
+```
+npm install @tabler/icons --save
+```
+
+### Bibliotecas de Loading React
+
+<a href="https://www.npmjs.com/package/react-loading-skeleton">https://www.npmjs.com/package/react-loading-skeleton</a>
+
+```
+npm install react-loading-skeleton
+```
+
+### Criando uma página 404 personalizada
+
+Dentro da pasta APP, crie o arquivo `not-found.tsx ou .jsx`:
+Com o App Router, é possível usar arquivos como not-found.tsx dentro da pasta app para lidar com páginas não encontradas (404) de uma forma mais flexível.
+
+```js
+import Image from "next/image";
+import NotFoundImage from "@/assets/404error.jpg";
+import Link from "next/link";
+
+export default function Page404() {
+  return (
+    <div className="h-screen flex flex-col justify-center items-center gap-7 text-center">
+      <h1 className="text-3xl text-zinc-400 font-bold">
+        404 - Página não encontrada!
+      </h1>
+      <Image src={NotFoundImage} alt="Erro 404" width={500} />
+
+      <p className="text-lg max-w-[600px]">
+        Você parece ter perdido o caminho... Mas não se preocupe, até os
+        melhores exploradores se perdem às vezes! 🧭
+      </p>
+
+      <Link href="/" className="bg-blue-500 py-2 px-4 rounded-md">
+        Voltar
+      </Link>
+    </div>
+  );
+}
+```
+
+<img src="./public/images/404page.jpeg" alt="...">
+
+### Criando Estilos personalizados para classes com no Tailwind CSS
+
+no aquivo `globals.css`:
+
+```css
+@layer components {
+  .button {
+    @apply bg-blue-500 text-gray-50 font-semibold py-2 px-4 rounded-md;
+  }
+}
+```
+
+No componente aplicando a classe criado:
+
+```js
+import Link from "next/link";
+
+export default function PageWithLayout() {
+  return (
+    <div className="flex flex-col justify-center h-screen items-center gap-5 text-2xl">
+      <h1>Conteúdo da página RAIZ</h1>
+      <Link href="/layout/child" className="button">
+        Ir para a página FILHA
+      </Link>
+    </div>
+  );
+}
+```
+
+<img src="./public/images/tailwindclass.jpeg" alt="...">
+
+
+### O conceito de Layout
+
+O conceito de Layout no Next.js se refere a uma estrutura reutilizável que permite que componentes e elementos comuns sejam compartilhados entre diferentes páginas ou partes do seu aplicativo. Ele ajuda a manter uma consistência visual e estrutural em todo o projeto, permitindo que partes do design (como cabeçalhos, rodapés, barras de navegação) sejam aplicadas de forma eficiente em várias páginas sem duplicação de código.
+
+Com o `App Router`, a estrutura de layout se torna mais poderosa e simplificada. Cada nível de pastas dentro da estrutura do App Router pode ter seu próprio layout persistente, o que significa que ele pode permanecer o mesmo enquanto o conteúdo da página interna é atualizado. Isso é útil para manter elementos estáticos como menus e rodapés enquanto navega entre páginas.
+
+Com a pasta app/, o arquivo de layout seria chamado `layout.js` ou `layout.tsx` e ficaria na raiz da pasta app.
+
+<strong>Exemplo</strong>
+
+```js
+// app/layout.js
+export default function RootLayout({ children }) {
+  return (
+    <html lang="pt-BR">
+      <body>
+        <header>Barra de Navegação</header>
+        {children}
+        <footer>Rodapé</footer>
+      </body>
+    </html>
+  );
+}
+```
+
+Esse LAYOUT JÁ VEM POR PADRÃO NA APLICAÇÃO NEXT
+
+<img src="./public/images/root-layout-next.png" alt="...">
