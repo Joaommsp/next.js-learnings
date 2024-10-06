@@ -772,3 +772,5 @@ export default async function Loading(props: { quantidade: number }) {
 ```
 
 <img src="./public/images/skeleton-loading.jpeg" alt="...">
+
+### Lado servidor e lado do cliente
