@@ -773,4 +773,216 @@ export default async function Loading(props: { quantidade: number }) {
 
 <img src="./public/images/skeleton-loading.jpeg" alt="...">
 
-### Lado servidor e lado do cliente
+SSR (Server-Side Rendering): Normalmente, a página carrega mais rápido para o usuário porque o servidor já envia o HTML completo. Isso significa que o conteúdo está disponível de forma imediata, proporcionando uma experiência de First Contentful Paint (FCP) mais rápida.
+
+CSR (Client-Side Rendering): A carga inicial tende a ser mais lenta porque o navegador precisa baixar e processar o JavaScript antes de mostrar o conteúdo dinâmico. O usuário pode ver uma tela em branco ou um placeholder até que todo o JavaScript seja executado
+
+### Lado servidor e lado do cliente (combinando)
+
+### Componente servidor
+
+```js
+export default function Servidor() {
+  return (
+    <div className="flex gap-3 text-xl bg-blue-600 border-2 border-white p-5">
+      <span className="font-bold">Data atual:</span>
+      <span>{new Date().toLocaleTimeString()}</span>
+    </div>
+  );
+}
+```
+
+### Componente cliente
+
+```js
+"use client";
+import { useState } from "react";
+
+export default function Cliente() {
+  const [data, alterarData] = useState(new Date());
+
+  return (
+    <div className="flex flex-col gap-5">
+      <div className="flex gap-3 text-xl bg-red-600 border-2 border-white p-5">
+        <span className="font-bold">Data atual:</span>
+        <span>{data.toLocaleTimeString()}</span>
+      </div>
+      <button onClick={() => alterarData(new Date())} className="button">
+        Atualizar
+      </button>
+    </div>
+  );
+}
+```
+
+### Combinando os dois componente
+
+```js
+import Cliente from "@/components/cliente-servidor/Cliente";
+import Servidor from "@/components/cliente-servidor/Servidor";
+
+export default function PaginaClienteServidor() {
+  return (
+    <div className="flex flex-col gap-10">
+      <div>
+        <h1>Componente Client</h1>
+        <Cliente />
+      </div>
+      <div>
+        <h1>Componente Server</h1>
+        <Servidor />
+      </div>
+    </div>
+  );
+}
+```
+
+Não faria sentido usar toda a página como use client quando apenas uma parte dela é necessário
+
+### Quando usar use client?
+
+<section>
+  <h2>Pages Directory (Diretório de páginas)</h2>
+  <p>
+    Por padrão, as páginas do Next.js que utilizam a função <code>getServerSideProps</code> ou <code>getStaticProps</code> são renderizadas no servidor (SSR) ou pré-renderizadas estaticamente (SSG).
+  </p>
+  <p>
+    Se você não definir uma dessas funções, Next.js utilizará a <strong>Client-Side Rendering (CSR)</strong> para carregar o conteúdo que depende de dados dinâmicos.
+  </p>
+</section>
+
+<section>
+  <h2>App Router (Diretório app/)</h2>
+  <p>
+    As páginas e componentes neste diretório são <strong>Server-Side Rendered (SSR)</strong> por padrão.
+  </p>
+  <p>
+    Para componentes que precisam ser renderizados no cliente, você deve especificar manualmente o uso do Client-Side usando a diretiva <code>'use client'</code> no topo do arquivo.
+  </p>
+</section>
+
+<section>
+  <h2>Componentes Interativos</h2>
+  <p>
+    Use <code>'use client'</code> quando o componente contém elementos interativos, como botões, campos de entrada, modais ou qualquer outra funcionalidade que exija manipulação direta do DOM.
+  </p>
+  <p>
+    Exemplos incluem formulários, animações interativas ou qualquer componente que precise responder a eventos de usuário.
+  </p>
+</section>
+
+<section>
+  <h2>Uso de Hooks do React</h2>
+  <p>
+    Se o seu componente usa hooks como <code>useState</code>, <code>useEffect</code>, <code>useContext</code>, ou qualquer outro hook que dependa do estado do cliente, você precisa usar <code>'use client'</code>.
+  </p>
+  <p>
+    Esses hooks dependem da execução no cliente para manter e atualizar o estado da aplicação.
+  </p>
+</section>
+
+<section>
+  <h2>Dependência de APIs do Navegador</h2>
+  <p>
+    Quando seu componente precisa acessar APIs que só estão disponíveis no ambiente do navegador, como <code>localStorage</code>, <code>sessionStorage</code>, ou <code>window</code>, você deve marcar o componente com <code>'use client'</code>.
+  </p>
+  <p>
+    Essas APIs não estão disponíveis durante a renderização no servidor.
+  </p>
+</section>
+
+<section>
+  <h2>Componentes de Terceiros que Requerem JavaScript</h2>
+  <p>
+    Se você estiver usando bibliotecas de terceiros que só funcionam no cliente (como bibliotecas de gráficos interativos ou animações), certifique-se de que seu componente seja um Client Component.
+  </p>
+</section>
+
+### Quando usar o use server?
+
+<section>
+  <h2>Quando usar 'use server'</h2>
+
+  <article>
+    <h3>Código Sensível que Não Deve Ser Exposto ao Cliente</h3>
+    <p>
+      Use <code>'use server'</code> para garantir que a lógica de negócios, cálculos complexos ou dados sensíveis sejam processados apenas no servidor.
+    </p>
+    <p>
+      Isso evita que informações confidenciais, como chaves de API ou dados de usuário, sejam enviados ao cliente.
+    </p>
+  </article>
+
+  <article>
+    <h3>Operações com Banco de Dados e APIs Privadas</h3>
+    <p>
+      Qualquer operação que interaja diretamente com um banco de dados ou uma API privada deve ser feita no servidor.
+    </p>
+    <p>
+      Por exemplo, funções de manipulação de dados, consultas a bancos de dados e operações CRUD são ótimos candidatos para <code>'use server'</code>.
+    </p>
+  </article>
+
+  <article>
+    <h3>Renderização Inicial para SEO e Performance</h3>
+    <p>
+      Usar <code>'use server'</code> ajuda a pré-renderizar páginas no servidor, o que é benéfico para SEO e para melhorar a performance inicial do site.
+    </p>
+    <p>
+      Componentes que contêm dados dinâmicos que precisam estar disponíveis imediatamente na renderização inicial devem ser processados no servidor.
+    </p>
+  </article>
+
+  <article>
+    <h3>Melhoria de Desempenho e Tempo de Carregamento</h3>
+    <p>
+      Lógica pesada de processamento que pode impactar o desempenho do cliente deve ser movida para o servidor.
+    </p>
+    <p>
+      Isso reduz a carga no lado do cliente e melhora a experiência do usuário ao carregar as páginas mais rapidamente.
+    </p>
+  </article>
+</section>
+
+<section>
+  <h2>Exemplo de Uso</h2>
+  <pre>
+<code>
+'use server';
+
+import { fetchDataFromDatabase } from './database';
+
+export default async function ServerComponent() {
+const data = await fetchDataFromDatabase();
+
+return (
+<div>
+<h1>Dados Sensíveis</h1>
+<p>{data}</p>
+</div>
+);
+}
+</code>
+
+  </pre>
+</section>
+
+<section>
+  <h2>Resumo</h2>
+  <ul>
+    <li>Use <code>'use server'</code> para lidar com dados sensíveis que não devem ser expostos ao cliente.</li>
+    <li>Utilize para operações com bancos de dados ou APIs privadas.</li>
+    <li>Melhore SEO e performance com renderização no servidor.</li>
+    <li>Execute lógica de negócios complexa para reduzir a carga no cliente.</li>
+  </ul>
+  <p>
+    Por padrão, no App Router (<code>app/</code>), tudo é renderizado no servidor, mas você pode usar <code>'use server'</code> para tornar explícito que o código deve ser tratado exclusivamente no servidor.
+  </p>
+</section>
+
+
+### Middlewares 
+
+Em Next.js, os middlewares desempenham um papel importante na manipulação de solicitações HTTP. Eles podem ser configurados para executar código durante a fase de processamento da requisição, antes que a resposta seja enviada de volta para o cliente. Essa abordagem é útil para aplicar lógica comum em várias rotas, como validações ou redirecionamentos.
+
+No Next.js, os middlewares são definidos em um arquivo específico chamado `middleware.js` ou middleware.ts na `raiz do seu projeto`. Eles funcionam interceptando requisições para todas as rotas ou para um subconjunto de rotas que você especificar
