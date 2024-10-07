@@ -30,9 +30,9 @@ export function ServiceSection() {
           initial={{ y: 50, opacity: 0 }}
           animate={inView ? { y: 0, opacity: 1 } : { y: 50, opacity: 0 }}
           transition={{ duration: 0.6, ease: "easeOut" }}
-          className="flex flex-col md:flex-row items-center w-full justify-between gap-12"
+          className="flex flex-col md:flex-row items-center w-full justify-between md:gap-12"
         >
-          <div className="flex-1 max-w-[594px] py-12 md:py-16 lg:py-28">
+          <div className="flex-1 max-w-[594px] pt-12 pb-8 md:py-16 lg:py-28">
             <span className="block text-primary-purple text-sm font-medium uppercase mb-4 md:mb-9 ">
               Serviços exclusivos
             </span>
@@ -63,8 +63,7 @@ export function ServiceSection() {
               />
             </ul>
           </div>
-          <motion.div
-          >
+          <motion.div>
             <Image width={324} src={AppMockup} alt="..." />
           </motion.div>
         </motion.div>
