@@ -1,4 +1,4 @@
-# Tailwind CSS Learnings
+# NEXT.js Learnings
 
 <div align="left">
   <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg" height="40" alt="nextjs logo"  />
