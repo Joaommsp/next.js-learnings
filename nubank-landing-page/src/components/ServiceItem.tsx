@@ -8,10 +8,10 @@ export interface ServiceItemProps {
 export default function ServiceItem(props: ServiceItemProps) {
   return (
     <li className="flex items-center gap-8">
-      <div className="w-7 h-7">
-        <Image src={props.icon} alt="..." />
+      <div className="w-12 h-12">
+        <Image className="w-7" src={props.icon} alt="..." />
       </div>
-      <span className="text-sm font-medium text-primary-gray">
+      <span className="text-xs lg:text-sm font-medium text-primary-gray">
         {props.text}
       </span>
     </li>

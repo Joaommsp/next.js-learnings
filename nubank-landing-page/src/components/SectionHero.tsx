@@ -8,16 +8,16 @@ import HeroImage from "@/assets/images/woman-model.png";
 
 export function SectionHero() {
   return (
-    <section className="w-full h-[534px] bg-hero-pattern bg-no-repeat bg-center bg-cover">
+    <section className="relative w-full h-full pt-16 px-8 lg:px-0 md:pt-0 md:h-[534px] bg-hero-pattern bg-no-repeat bg-center bg-cover">
       <Container>
-        <div className="flex-1 max-w-[534px]">
-          <h1 className="text-gray-300 text-6xl font-medium mb-4">
+        <div className="flex-1 justify-center max-w-[534px]">
+          <h1 className="text-center md:text-left text-gray-100 text-2xl md:text-3xl lg:text-6xl font-medium mb-4">
             Seu banco inteiro na palma da mão
           </h1>
-          <p className="text-gray-300 font-light text-xl max-w-[408px] mb-8">
+          <p className="text-center md:text-left text-gray-300 font-light md:text-lg lg:text-xl max-w-[408px] mb-8">
             Tudo que você precisa em um só lugar. Um N de possibilidades
           </p>
-          <div className="flex items-center gap-4 mb-12">
+          <div className="flex justify-center md:justify-start items-center gap-4 mb-12">
             <button>
               <Image width={156} src={AppStoreBtn} alt="..." />
             </button>
@@ -25,7 +25,7 @@ export function SectionHero() {
               <Image width={156} src={PlayStoreBtn} alt="..." />
             </button>
           </div>
-          <button className="flex items-center gap-2">
+          <button className="hidden md:flex items-center gap-2">
             <Image src={ArrowDownIcon} alt="..." />
             <span className="text-gray-50 text-sm">Continue explorando</span>
           </button>
