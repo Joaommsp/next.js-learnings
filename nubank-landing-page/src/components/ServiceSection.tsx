@@ -1,3 +1,8 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { useInView } from "react-intersection-observer";
+
 import { Container } from "./Container";
 
 import PhoneIcon from "@/assets/images/icon-phone.svg";
@@ -11,11 +16,22 @@ import ServiceItem from "./ServiceItem";
 import Image from "next/image";
 
 export function ServiceSection() {
+  const { ref, inView } = useInView({
+    triggerOnce: true,
+    threshold: 0.1,
+  });
+
   return (
     <section className="flex flex-col items-center py-4 px-8 lg:px-0 ">
       <div className="w-52 h-1 bg-gray-400 rounded-full"></div>
       <Container>
-        <div className="flex flex-col md:flex-row items-center w-full justify-between gap-12">
+        <motion.div
+          ref={ref}
+          initial={{ y: 50, opacity: 0 }}
+          animate={inView ? { y: 0, opacity: 1 } : { y: 50, opacity: 0 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          className="flex flex-col md:flex-row items-center w-full justify-between gap-12"
+        >
           <div className="flex-1 max-w-[594px] py-12 md:py-16 lg:py-28">
             <span className="block text-primary-purple text-sm font-medium uppercase mb-4 md:mb-9 ">
               Serviços exclusivos
@@ -47,10 +63,11 @@ export function ServiceSection() {
               />
             </ul>
           </div>
-          <div>
+          <motion.div
+          >
             <Image width={324} src={AppMockup} alt="..." />
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       </Container>
     </section>
   );
