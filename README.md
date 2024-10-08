@@ -30,6 +30,12 @@
 
 #
 
+## Nubank Landing page
+
+Desenvolvi essa pequena landing page para me introduzir no Next.js (Clique na imagem paraq visitar o deploy)
+
+<a href="https://nextjs-nubank-landing-page-by-joao.vercel.app/"><img src="./public/images/nubank-landing-page-cover.png" alt="..."></a>
+
 ### Server-Side Rendering (SSR)
 
 <p>
@@ -956,6 +962,7 @@ export default async function ServerComponent() {
 const data = await fetchDataFromDatabase();
 
 return (
+
 <div>
 <h1>Dados Sensíveis</h1>
 <p>{data}</p>
@@ -980,8 +987,7 @@ return (
   </p>
 </section>
 
-
-### Middlewares 
+### Middlewares
 
 Em Next.js, os middlewares desempenham um papel importante na manipulação de solicitações HTTP. Eles podem ser configurados para executar código durante a fase de processamento da requisição, antes que a resposta seja enviada de volta para o cliente. Essa abordagem é útil para aplicar lógica comum em várias rotas, como validações ou redirecionamentos.
 
