@@ -953,7 +953,7 @@ Não faria sentido usar toda a página como use client quando apenas uma parte d
 <section>
   <h2>Exemplo de Uso</h2>
   <pre>
-<code>
+
 'use server';
 
 import { fetchDataFromDatabase } from './database';
@@ -963,15 +963,15 @@ const data = await fetchDataFromDatabase();
 
 return (
 
+```html
 <div>
 <h1>Dados Sensíveis</h1>
 <p>{data}</p>
 </div>
 );
 }
-</code>
+```
 
-  </pre>
 </section>
 
 <section>
